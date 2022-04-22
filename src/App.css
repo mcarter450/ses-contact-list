@@ -1,0 +1,109 @@
+body {
+  padding: 1em;
+}
+
+button {
+  cursor: pointer;
+}
+
+.list-name {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.edit-list {
+  display: inline-block;
+}
+
+.edit-list .btn {
+  margin-left: calc(var(--bs-gutter-x) * 0.5);
+}
+
+.edit-list-form .inline-label {
+  margin-right: 1rem;
+}
+
+.edit-list-form .form-check-label {
+  cursor: pointer;
+}
+
+.filter-list {
+  padding-bottom: 10px;
+}
+
+.filter-list label {
+  margin-right: 5px;
+}
+
+.filter-list .bulk-actions .btn {
+  width: 100%;
+}
+
+.contact-list ul {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.contact-list ul > li {
+  clear: right;
+  list-style: none;
+  padding: 5px 5px 5px 15px;
+}
+
+.contact-list .accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.contact-list .accordion-header em {
+  color: red;
+}
+
+.contact-list .accordion-header label {
+  cursor: pointer;
+}
+
+.contact-list .accordion-header input[type=checkbox] {
+  margin-right: 5px;
+}
+
+.contact-list .accordion-button {
+  width: initial;
+  padding: 0.75rem 1rem;
+}
+
+/*.contact-list ul > li .prefs {
+  background-color: #fff;
+  margin: 1em;
+  border: 1px dashed #eee;
+  padding: 10px;
+  overflow: hidden;
+  transition: max-height .3s ease-out;
+  max-height: 0;
+}*/
+
+/*.contact-list ul > li .prefs.open {
+  max-height: 500px;
+}*/
+
+.contact-list ul > li > label {
+  cursor: pointer;
+}
+
+.contact-list ul > li:nth-child(even) {
+  background-color: #eee;
+}
+
+footer .new-contact label {
+  margin-right: 5px;
+}
+
+footer .new-contact .btn-primary {
+  width: 100%;
+}
+
+footer .pagination {
+  justify-content: center;
+  margin-top: 1rem;
+}
