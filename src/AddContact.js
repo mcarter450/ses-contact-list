@@ -39,6 +39,8 @@ class AddContact extends React.Component {
    */
   handleSave(e) {
 
+    e.preventDefault();
+
     this.props.handleSaveContact({
       name: this.state.name,
       email: this.state.email

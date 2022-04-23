@@ -1,3 +1,4 @@
 .env*
+*.tar.gz
 build
 node_modules
