@@ -10,7 +10,7 @@ class ContactList extends React.Component {
 
     this.state = { 
       prefs: null,
-      show_prefs: false
+      show_prefs: false,
     };
 
     this.handleShowPrefsClick = this.handleShowPrefsClick.bind(this);
@@ -26,7 +26,30 @@ class ContactList extends React.Component {
    */
   handleCheckboxClick(e) {
 
-    this.props.handleCheckboxClick(e.target);
+    const target = e.target;
+
+    // Notify parent
+    this.props.handleCheckboxClick(target);
+
+  }
+
+  /**
+   * Get checkbox state from parent
+   * 
+   * @param {Number} index of checkbox
+   */
+  getCheckBoxState(index) {
+
+    let found = -1;
+
+    for (let i = 0; i < this.props.selected_items.length; i++ ) {
+      if (this.props.selected_items[i] == index) {
+        found = 1;
+        break;
+      }
+    }
+
+    return found;
 
   }
 
@@ -172,7 +195,7 @@ class ContactList extends React.Component {
       items.push(
         <Accordion.Item as="li" eventKey={index + this.props.next_token} key={index + this.props.next_token}>
           <h5 className="accordion-header">
-            <label><input type="checkbox" value={index} onChange={this.handleCheckboxClick} /> {item.EmailAddress}</label>
+            <label><input type="checkbox" value={index} onChange={this.handleCheckboxClick} checked={ this.getCheckBoxState(index) == 1 } /> {item.EmailAddress}</label>
             {is_suppressed}
             <Accordion.Button value={index} onClick={this.handleShowPrefsClick} />
           </h5>

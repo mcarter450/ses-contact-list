@@ -67,7 +67,7 @@ class App extends React.Component {
       <div className="container">
         <h3 className="list-name">{list_description}</h3>
         <div className="row filter-list">
-          <div className="col-6">
+          <div className="col-md-6">
             <ButtonGroup>
               <DropdownButton variant="dark" id="dropdown-num-results" title="Number of results" onSelect={this.handleSetPageSize}>
                 <Dropdown.Item eventKey="10">10</Dropdown.Item>
@@ -79,10 +79,10 @@ class App extends React.Component {
               {edit_list}
             </ButtonGroup>
           </div>
-          <div className="col-6">
+          <div className="col-md-6">
             <form className="bulk-actions" onSubmit={this.handleApplyBulkAction}>
               <div className="row">
-                <label className="col-2 offset-3 col-form-label">Bulk actions</label>
+                <label className="col-3 col-form-label">Bulk actions</label>
                 <div className="col">
                   <Form.Select id="bulkaction" onChange={this.handleSetBulkAction}>
                     <option value="remove">Remove</option>
@@ -97,7 +97,14 @@ class App extends React.Component {
           </div>
           
         </div>
-        <ContactList items={this.state.contacts} suppressed_emails={this.state.suppressed_emails} next_token={this.state.next_token} list_name={this.state.list_name} sesv2={sesv2} handleCheckboxClick={this.handleCheckboxClick} />
+        <ContactList 
+          items={this.state.contacts} 
+          suppressed_emails={this.state.suppressed_emails} 
+          selected_items={this.state.selected_items} 
+          next_token={this.state.next_token} 
+          list_name={this.state.list_name} 
+          sesv2={sesv2} 
+          handleCheckboxClick={this.handleCheckboxClick} />
         <footer>
           <AddContact handleSaveContact={this.handleSaveContact} /> {/*<Button onClick={this.handleAddFakeContacts}>Add Fake Emails</Button>*/}
           <nav aria-label="Page navigation">
@@ -252,18 +259,18 @@ class App extends React.Component {
     let index = target.value,
         found = this.state.selected_items.indexOf(index);
 
-    if (found == -1 && target.checked == true) {
+    if (found == -1) {
       // add index
       this.state.selected_items.push(index);
-      this.setState({ selected_items: this.state.selected_items });
 
     }
-    else if (found > -1 && target.checked == false) {
+    else if (found > -1) {
       // remove index
       this.state.selected_items.splice(found, 1);
-      this.setState({ selected_items: this.state.selected_items });
 
     }
+
+    this.setState({ selected_items: this.state.selected_items });
 
   }
 
@@ -343,7 +350,7 @@ class App extends React.Component {
     this.setState({ selected_items: [], next_token: '', suppressed_emails: this.state.suppressed_emails });
     this.getContactList();
 
-  } 
+  }
 
   /**
    * Refresh list after update

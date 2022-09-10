@@ -35,6 +35,12 @@ button {
   margin-right: 5px;
 }
 
+@media only screen and (max-width: 768px) {
+  .filter-list .bulk-actions {
+    margin-top: 1rem;
+  }
+}
+
 .filter-list .bulk-actions .btn {
   width: 100%;
 }
