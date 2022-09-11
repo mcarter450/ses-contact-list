@@ -1,11 +1,14 @@
 import './App.css';
 
-import { Form, Button, ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Container, Nav, Navbar, Form, Button, ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
 
 import React from 'react';
+import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 import EditList from './EditList';
 import AddContact from './AddContact';
 import ContactList from './ContactList';
+import EmailTemplates from './EmailTemplates';
+import ConfigurationSet from './ConfigurationSet';
 
 import fakeEmails from './fakeEmails';
 
@@ -63,59 +66,77 @@ class App extends React.Component {
       list_description = this.state.list.Description;
     }
 
+
     return (
-      <div className="container">
-        <h3 className="list-name">{list_description}</h3>
-        <div className="row filter-list">
-          <div className="col-md-6">
-            <ButtonGroup>
-              <DropdownButton variant="dark" id="dropdown-num-results" title="Number of results" onSelect={this.handleSetPageSize}>
-                <Dropdown.Item eventKey="10">10</Dropdown.Item>
-                <Dropdown.Item eventKey="15">15</Dropdown.Item>
-                <Dropdown.Item eventKey="25">25</Dropdown.Item>
-                <Dropdown.Item eventKey="50">50</Dropdown.Item>
-                <Dropdown.Item eventKey="100">100</Dropdown.Item>
-              </DropdownButton>
-              {edit_list}
-            </ButtonGroup>
-          </div>
-          <div className="col-md-6">
-            <form className="bulk-actions" onSubmit={this.handleApplyBulkAction}>
-              <div className="row">
-                <label className="col-3 col-form-label">Bulk actions</label>
-                <div className="col">
-                  <Form.Select id="bulkaction" onChange={this.handleSetBulkAction}>
-                    <option value="remove">Remove</option>
-                    <option value="suppress">Suppress</option>
-                  </Form.Select>
+      <BrowserRouter>
+        <div className="container">
+          <h3 className="list-name">{list_description}</h3>
+          <Navbar bg="dark" variant="dark">
+            <Container>
+              <Nav className="me-auto">
+                <Nav.Link as={NavLink} to="/">Contact list</Nav.Link>
+                <Nav.Link as={NavLink} to="/templates">Email templates</Nav.Link>
+                <Nav.Link as={NavLink} to="/configuration">Configuration set</Nav.Link>
+              </Nav>
+            </Container>
+          </Navbar>
+          <div className="row filter-list">
+            <div className="col-md-6">
+              <ButtonGroup>
+                <DropdownButton variant="dark" id="dropdown-num-results" title="Number of results" onSelect={this.handleSetPageSize}>
+                  <Dropdown.Item eventKey="10">10</Dropdown.Item>
+                  <Dropdown.Item eventKey="15">15</Dropdown.Item>
+                  <Dropdown.Item eventKey="25">25</Dropdown.Item>
+                  <Dropdown.Item eventKey="50">50</Dropdown.Item>
+                  <Dropdown.Item eventKey="100">100</Dropdown.Item>
+                </DropdownButton>
+                {edit_list}
+              </ButtonGroup>
+            </div>
+            <div className="col-md-6">
+              <form className="bulk-actions" onSubmit={this.handleApplyBulkAction}>
+                <div className="row">
+                  <label className="col-3 col-form-label">Bulk actions</label>
+                  <div className="col">
+                    <Form.Select id="bulkaction" onChange={this.handleSetBulkAction}>
+                      <option value="remove">Remove</option>
+                      <option value="suppress">Suppress</option>
+                    </Form.Select>
+                  </div>
+                  <div className="col">
+                    <button type="submit" className="btn btn-primary">Apply</button>
+                  </div>
                 </div>
-                <div className="col">
-                  <button type="submit" className="btn btn-secondary">Apply</button>
-                </div>
-              </div>
-            </form>
+              </form>
+            </div>
+            
           </div>
-          
+
+          <Routes>
+            <Route path="/" element={<ContactList 
+              items={this.state.contacts} 
+              suppressed_emails={this.state.suppressed_emails} 
+              selected_items={this.state.selected_items} 
+              next_token={this.state.next_token} 
+              list_name={this.state.list_name} 
+              sesv2={sesv2} 
+              handleCheckboxClick={this.handleCheckboxClick} />} />
+            <Route path="/templates" element={<EmailTemplates/>} />
+            <Route path="/configuration" element={<ConfigurationSet/>} />
+          </Routes>
+
+          <footer>
+            <AddContact handleSaveContact={this.handleSaveContact} /> {/*<Button onClick={this.handleAddFakeContacts}>Add Fake Emails</Button>*/}
+            <nav aria-label="Page navigation">
+              <ul className="pagination">
+                {/*<li class="page-item"><a class="page-link" href="#">Previous</a></li>*/}
+                <li className="page-item"><a className="page-link" href="#" onClick={this.handleGoToFirstPageClick}>1</a></li>
+                <li className="page-item"><a className="page-link" href="#" onClick={this.handleNextClick}>Next</a></li>
+              </ul>
+            </nav>
+          </footer>
         </div>
-        <ContactList 
-          items={this.state.contacts} 
-          suppressed_emails={this.state.suppressed_emails} 
-          selected_items={this.state.selected_items} 
-          next_token={this.state.next_token} 
-          list_name={this.state.list_name} 
-          sesv2={sesv2} 
-          handleCheckboxClick={this.handleCheckboxClick} />
-        <footer>
-          <AddContact handleSaveContact={this.handleSaveContact} /> {/*<Button onClick={this.handleAddFakeContacts}>Add Fake Emails</Button>*/}
-          <nav aria-label="Page navigation">
-            <ul className="pagination">
-              {/*<li class="page-item"><a class="page-link" href="#">Previous</a></li>*/}
-              <li className="page-item"><a className="page-link" href="#" onClick={this.handleGoToFirstPageClick}>1</a></li>
-              <li className="page-item"><a className="page-link" href="#" onClick={this.handleNextClick}>Next</a></li>
-            </ul>
-          </nav>
-        </footer>
-      </div>
+      </BrowserRouter>
     );
 
   }

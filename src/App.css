@@ -6,6 +6,12 @@ button {
   cursor: pointer;
 }
 
+.navbar {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  margin-bottom: 10px;
+}
+
 .list-name {
   text-align: center;
   margin-bottom: 1.5rem;
